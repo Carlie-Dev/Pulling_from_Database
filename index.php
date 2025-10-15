@@ -3,10 +3,12 @@
 require __DIR__ . '/db.php';
 require __DIR__ . '/functions.php';
 
-$conn = db();
+$pdo = db();
 
 // Load dropdown options
 
+    $sqlList = buildSqlList();
+    $stmtList = $pdo ->query($sqlList); 
 // Load Main Table
 
 
@@ -52,10 +54,20 @@ $conn = db();
 <body>
     <h2>Games — Choose a Title</h2>
 
+    
+        
+
     <form method="get">
         <label for="game_id">Title:</label>
         <select id="game_id" name="game_id">
             <option value="">-- All Games --</option>
+            <?php while ($opt = $stmtList->fetch()){
+                    $gameID = $opt['game_id'];
+                    $title = $opt['title'];
+                    echo ("<option value='$gameID'>$title</option>");
+                }
+        
+            ?>
             <!-- GET GAMES from the database -->
 
         </select>
