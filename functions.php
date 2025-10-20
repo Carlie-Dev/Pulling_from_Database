@@ -9,7 +9,7 @@ function buildSqlMain(int $id): string
 {
     if ($id > 0) {
 
-        return "SELECT game_id, title, price FROM games WHERE game_id = $id";
+        return "SELECT * FROM `games` JOIN ratings ON ratings.rating_id = games.esrb_id WHERE game_id=$id;";
     }
-    return "SELECT game_id, title, price FROM games ORDER BY title";
+    return "SELECT * FROM `games` JOIN ratings ON ratings.rating_id = games.esrb_id";
 }

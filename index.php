@@ -9,10 +9,12 @@ $pdo = db();
 
     $sqlList = buildSqlList();
     $stmtList = $pdo ->query($sqlList); 
+
 // Load Main Table
-
-
-
+$selectedID = isset($_GET['game_id']) ? $_GET['game_id'] : 0;
+$sqlMain = buildSqlMain($selectedID);
+echo "</pre>$sqlMain</pre>";
+$stmtMain = $pdo ->query($sqlMain);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,13 +79,21 @@ $pdo = db();
     <table>
         <thead>
             <tr>
-                <th style="text-align:left;">ID</th>
+                <th style="text-align:left;">Rating</th>
                 <th style="text-align:left;">Title</th>
                 <th style="text-align:right;">Price</th>
             </tr>
         </thead>
         <tbody>
             <!-- Fill main table -->
+             <?php while ($row = $stmtMain->fetch()):?>
+                <tr>
+                    <td><?=$row['code']?></td>
+                    <td><?=$row['title']?></td>
+                    <td><?=number_format((float)$row['price'],2)?></td>
+                    
+                </tr>
+            <?php endwhile; ?>
         </tbody>
     </table>
 
